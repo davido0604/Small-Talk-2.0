@@ -9,6 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
+
+var loginKey = "LOGIN_KEY"
 
 class LoginFragment : Fragment() {
 
@@ -37,21 +42,18 @@ class LoginFragment : Fragment() {
 
     }
     private fun login() {
-        var loginKey = "LOGIN_KEY"
         login_button.setOnClickListener{
 
             if (username_input.text.toString() == "" && userpassword_input.text.toString() == "") {
-                //(requireActivity() as MainActivity).menybar.selectedItemId = R.id.home
                 var sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
                 sharedPreferences
                     .edit()
                     .putBoolean(loginKey, true)
                     .apply()
 
-                fragmentManager.commit {
+                activity?.supportFragmentManager?.commit {
                     setReorderingAllowed(true)
-                    // Replace whatever is in the fragment_container view with this fragment
-                    replace<ExampleFragment>(R.id.fragment_container)
+                    replace<MainChatFragment>(R.id.fragmentContainerView)
                 }
             }
         }
