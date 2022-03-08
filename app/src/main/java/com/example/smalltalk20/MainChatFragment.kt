@@ -35,8 +35,6 @@ class MainChatFragment : Fragment() {
          */
 
 
-
-
         return view
     }
 

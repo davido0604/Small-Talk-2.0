@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
                 setReorderingAllowed(true)
                 replace<LoginFragment>(R.id.fragmentContainerView)
             }
-
         }
     }
 }
