@@ -9,9 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.example.smalltalk20.database.AppDatabase
+import com.example.smalltalk20.database.User
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 var loginKey = "LOGIN_KEY"
 
@@ -51,10 +57,25 @@ class LoginFragment : Fragment() {
                     .putBoolean(loginKey, true)
                     .apply()
 
-                activity?.supportFragmentManager?.commit {
-                    setReorderingAllowed(true)
-                    replace<MainChatFragment>(R.id.fragmentContainerView)
+                val user = User(
+                    username = "Daweedo",
+                    fullName = "Weed Daweed"
+                )
+
+                val database = AppDatabase.getInstance(requireContext())
+                val userDAO = database.userDao()
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    userDAO.removeAllUsers()
+                    userDAO.saveUser(user)
+
+                    activity?.supportFragmentManager?.commit {
+                        setReorderingAllowed(true)
+                        replace<MainChatFragment>(R.id.fragmentContainerView)
+                    }
                 }
+            } else {
+                Toast.makeText(activity, "Feil brukernavn eller passord", Toast.LENGTH_SHORT).show()
             }
         }
     }
