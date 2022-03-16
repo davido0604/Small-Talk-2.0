@@ -47,7 +47,6 @@ class ChatAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
         context = parent.context
 
-        // Sjekker her om hva slags type view jeg skal vise, og laste inn riktig XML basert på dette
         val cellView = if (viewType == 0) {
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.right_chat_cell_item, parent, false)
@@ -61,7 +60,6 @@ class ChatAdapter(
         params.width = ViewGroup.LayoutParams.MATCH_PARENT
         cellView.layoutParams = params
 
-        // Oppretter riktig ViewHolder-type basert på hva som skal vises
         return if (viewType == 0) {
             RightChatViewHolder(cellView)
         } else {
@@ -69,7 +67,6 @@ class ChatAdapter(
         }
     }
 
-    // Her trenger jeg ikke bry meg om typen (venstre/høyre) fordi jeg tar inn foreldre-ViewHolder
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         val chatObject = dataSet[position]
 
@@ -82,8 +79,6 @@ class ChatAdapter(
 
     override fun getItemCount() = dataSet.size
 
-
-    // Sjekker om chat er fra innlogget bruker (skal isåfall vises på høyre side)
     private fun isChatFromLoggedInUser(position: Int): Boolean {
         return dataSet[position].username == loggedInUsername
     }
